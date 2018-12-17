@@ -1,0 +1,64 @@
+import org.sireum.logika._
+
+// global variable machine_count
+//   holds the number of Gatorade bottles currently in the vending machine
+var machineCount: Z = 40
+
+// global variable warehouse_count
+//  holds the number of Gatorade bottles currently in the warehouse
+var warehouseCount: Z = 100
+
+// Procedure vend takes an integer value countToVend indicating the number
+// of gatorade bottles that the user wants to buy and updates
+// the global variables to reflect the state of the vending machine
+// after the associated Gatorade purchase.
+//
+// Note: if the vending machine cannot supply the amount of
+// bottles that the user wants to buy, the operation should not
+// be performed (i.e., the procedure should not be called by a client).
+//
+// As the procedure executes, it updates global variables
+// as expected.
+
+def vend(countToVend: Z): Unit = {   // This procedure doesn't return anything
+    // you have to add pre- and post-conditions, and
+    // the implementation for this procedure;
+    l"""{
+        requires countToVend <= machineCount
+        modifies machineCount
+        ensures machineCount = machineCount_in - countToVend
+    }"""
+    machineCount = machineCount - countToVend
+}
+
+// Procedure restock represents the actions of a service man to
+// replenish the vending machine with gatorade bottles.
+// The procedures updates the local variables to reflect the transfer
+// Gatorade from the warehouse to the vending machine.
+//
+// Note: if the warehouse cannot provide the complete count to
+// restock, the procedure should not be used.
+//
+// As the procedure executes, it updates global variables
+// as expected.
+
+def restock(countToRestock: Z): Unit = {  // This procedure doesn't return anything
+    // you have to add pre- and post-conditions, and
+    // the implementation for this procedure;
+    l"""{
+        requires countToRestock <= warehouseCount
+        modifies machineCount, warehouseCount
+        ensures machineCount = machineCount_in + countToRestock
+                warehouseCount = warehouseCount_in - countToRestock
+    }"""
+    machineCount = machineCount + countToRestock
+    warehouseCount = warehouseCount - countToRestock
+}
+
+// client code
+val numWanted: Z = 5
+if (machineCount >= numWanted) {
+    vend(numWanted)
+} else {
+    // do nothing
+}

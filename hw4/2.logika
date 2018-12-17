@@ -1,0 +1,21 @@
+//p = System is in Maintenance mode
+//q = Operational Tasking queue is empty
+//r = MAIN task is in IDLE mode
+¬p ∨ q ⊢ p → q
+{
+    1. ¬p ∨ q       premise
+    2. {
+        3. p        assume
+        4.
+        {
+          5. ¬p     assume
+          6. ⊥      ¬e 3 5
+          7. q      ⊥e 6
+        }
+        8. {
+            9. q     assume
+        }
+        10. q        Ve 1 4 8
+    }
+    11. p → q        →i 2
+}

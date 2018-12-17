@@ -1,0 +1,77 @@
+/*
+2. (6 Points)
+a. *Weasley’s Wizard Wheezes does not provide Knuts as change.
+They round to the “nearest” Sickle.  To ensure they don’t lose money,
+they want 15 Knuts to round down.*
+
+b. Add the logical steps to program 2.logika to show that when less than 16 Knuts
+ should be returned, the number of Sickles is rounded down and when
+ 16-or-more Knuts should be returned the number of Sickles is rounded up.
+   
+c. The three middle assertions check this behavior.
+
+d. The three bottom assertions check to make sure the Knuts are converted properly to Sickles.
+*/
+import org.sireum.logika._
+
+val exact:Z = readInt("Type exact change (in knuts): ")
+var rounded: Z = exact
+
+l"""{
+    1.  29 ≠ 0                                              algebra
+}"""
+if (rounded % 29 < 16){
+    rounded = rounded - rounded % 29
+    l"""{
+        // Fix Me
+        1. rounded = rounded_old - rounded_old % 29          premise
+        2. 29 ≠ 0                                            premise
+        3. rounded_old % 29 < 16                             premise
+        4. rounded_old = exact                               premise
+        5. rounded = exact - exact % 29                      subst1 4 1
+        6. rounded_old % 29 <= 15                            algebra 3
+        7. exact % 29 <= 15                                  subst1 4 6
+        8. exact % 29 = exact - rounded                      algebra 5
+        9. exact - rounded <= 15                             subst1 8 7
+        10. rounded - exact == 0-exact % 29                  algebra 5
+        11. rounded % 29 == 0                                algebra 1
+        12. rounded - exact <= 15                            algebra 10
+    }"""
+} else {
+    rounded = rounded + 29 - rounded % 29
+    l"""{
+        // Fix Me
+        1. rounded = rounded_old + 29 - rounded_old % 29     premise
+        2. rounded % 29 == 0                                 algebra 1
+        3. rounded_old == exact                              premise
+        4. !(rounded_old % 29 < 16)                          premise
+        5. rounded_old % 29 >= 16                            algebra 4
+        6. rounded == exact + 29 - exact % 29                subst1 3 1
+        7. exact % 29 >= 16                                  subst1 3 5
+        8. rounded - exact == 29 - exact % 29                algebra 6
+        9. rounded - exact <= 13                             algebra 8 7
+        10. rounded - exact <= 15                            algebra 9
+        11. exact - rounded == -29 + exact % 29              algebra 6
+        12. exact - rounded <= 15                            algebra 6 7
+    }"""
+}
+
+assert(rounded % 29 == 0)
+assert(exact - rounded <= 15)
+assert(rounded - exact <= 15)
+
+val sickles: Z = rounded / 29
+l"""{
+    // Fix Me
+    1. sickles == rounded / 29         premise
+    2. rounded % 29 == 0               premise
+    3. exact - rounded <= 15           premise
+    4. rounded - exact <= 15           premise
+    5. sickles * 29 == rounded         algebra 1 2
+    6. sickles * 29 - exact <= 15      subst2 5 4
+    7. exact - sickles * 29 <= 15      subst2 5 3
+}"""
+assert(sickles * 29 == rounded)
+assert(sickles * 29 - exact <= 15)
+assert(exact - sickles * 29 <= 15)
+//assert(exact % 29 < 16 | sickles * 29 > exact)

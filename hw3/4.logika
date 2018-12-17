@@ -1,0 +1,54 @@
+p → s ⊢ p ∧ q → r ∨ s
+/*
+{
+    1. p → s       premise
+    2. {
+            3. p        assume
+            4. s        →e 1 3
+            5. r V s    Vi2 4
+            6. {
+                7. q    assume
+                9. p ^ q ^i 3 7
+            }
+
+    }
+}
+*/
+{
+    1. p → s       premise
+    2.
+    {
+        3. p ^ q    assume
+        4. p        ^e1 3
+        5. s        →e 1 4
+        6. r V s    Vi2 5
+    }
+    7. p ^ q → (r V s) →i 2
+}
+
+
+/*
+                  *
+----------------------------------------
+p q r s | (p → s) → ((p ^ q) → (r V s))
+----------------------------------------
+T T T T |    T    T     T    T    T
+T T T F |    F    T     T    T    T
+T T F T |    T    T     T    T    T
+T T F F |    F    T     T    F    F
+T F T T |    T    T     F    T    T
+T F T F |    F    T     F    T    T
+T F F T |    T    T     F    T    T
+T F F F |    F    T     F    T    F
+F T T T |    T    T     F    T    T
+F T T F |    T    T     F    T    T
+F T F T |    T    T     F    T    T
+F T F F |    T    T     F    T    F
+F F T T |    T    T     F    T    T
+F F T F |    T    T     F    T    T
+F F F T |    T    T     F    T    T
+F F F F |    T    T     F    T    F
+-----------------------------------------
+
+Tautology
+*/

@@ -1,0 +1,26 @@
+¬∀ x p(x) → q(x) ⊢ ∃ x p(x) ∧ ¬q(x)
+{
+    1. ¬∀ x p(x) → q(x)         premise
+    2. {
+        3. ¬∃ x p(x) ∧ ¬q(x)    assume //for pbc
+        4. {
+            5. x0
+            6. {
+                7. p(x0)        assume
+                8. {
+                    9. ~q(x0)               assume
+                    10. p(x0) ^ ~q(x0)      ^i 7 9
+                    11. ∃ x p(x) ^ ~q(x)    ∃i 10 x0
+                    12. _|_                 ~e 11 3
+                }
+                13. q(x0)        pbc 8
+
+            }
+            14. p(x0) → q(x0)    →i 6
+        }
+        15. ∀ x p(x) → q(x)      ∀i 4
+        16. _|_                  ~e 15 1
+    }
+    17. ∃ x p(x) ∧ ¬q(x)         pbc 2
+}
+

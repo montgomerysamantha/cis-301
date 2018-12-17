@@ -1,0 +1,31 @@
+¬(p ∧ q ∧ r) ⊢ ¬p ∨ ¬q ∨ ¬r
+{
+    1. ¬(p ∧ q ∧ r)         premise
+    2. {
+        3. ¬(¬p ∨ ¬q ∨ ¬r)  assume
+        4. {
+            5. ~p           assume
+            6. ~p V ~q      Vi1 5
+            7. ~p V ~q V ~r Vi1 6
+            8. _|_          ~e 7 3
+        }
+        9. p                pbc 4
+        10. {
+            11. ~q           assume
+            12. ~p V ~q      Vi2 11
+            13. ~p V ~q V ~r Vi1 12
+            14. _|_          ~e 13 3
+        }
+        15. q                pbc 10
+        16. {
+            17. ~r           assume
+            18. ~p V ~q V ~r Vi2 17
+            19. _|_          ~e 18 3
+        }
+        20. r                pbc 16
+        21. p ^ q            ^i 9 15
+        22. p ^ q ^ r        ^i 21 20
+        23. _|_              ~e 22 1
+    }
+    24. (¬p ∨ ¬q ∨ ¬r)       pbc 2
+}

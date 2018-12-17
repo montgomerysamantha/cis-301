@@ -1,0 +1,38 @@
+//p ∧ q → r ⊢ p → q → r
+/*
+{
+    1. p ^ q -> r       premise
+    2. {
+        3. p ^ q        assume
+        4. p            ^e1 3
+        5. q            ^e2 3
+        6. r            ->e 1 3
+    }
+    7. p -> q           ->i 2
+    8. {
+        9. r            assume
+        10. p ^ q       ->e 1 9
+        11. p           ^e1 10
+        12. q           ^e2 10
+    }
+    13. p -> q -> r     ->i 8 7
+} */
+//this cannot be proved because it is contingent
+
+                      *
+--------------------------------------
+p q r | ((p ^ q) → r) → ((p → q) → r)
+--------------------------------------
+T T T |     T    T T  T     T    T
+T T F |     T    F F  T     T    F F
+T F T |     F    T T  T     F    T T
+T F F |     F    T F  T     F    T
+F T T |     F    T T  T     T    T
+F T F |     F    T F  F     T    F
+F F T |     F    T T  T     T    T
+F F F |     F    T F  F     T    F
+--------------------------------------
+
+Contingent
+- T: [T T T] [T T F] [T F T] [T F F] [F T T] [F F T]
+- F: [F T F] [F F F]

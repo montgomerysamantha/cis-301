@@ -1,0 +1,34 @@
+import org.sireum.logika._
+
+val squared:Z = readInt("Type an int > 1: ")
+                                                assume(squared > 1)
+var guess:Z = 1
+l"""{
+    // Fix Me
+    1. guess == 1                                           premise
+    2. squared > 1                                          premise
+    3. (guess - 1) * (guess - 1) < squared                  algebra 1 2
+}"""
+while ( guess * guess < squared){
+    l"""{
+        invariant (guess-1) * (guess -1) < squared
+        modifies guess
+    }"""
+    guess = guess +1
+    l"""{
+        //Fix Me
+        1. guess = guess_old + 1                            premise
+        2. (guess_old) * (guess_old) < squared              premise
+        3. squared > 1                                      premise
+        4. guess_old = guess - 1                            algebra 1
+        5. (guess - 1) * (guess - 1) < squared              subst1 4 2
+    }"""
+}
+l"""{
+     // Fix Me
+     1. not (guess * guess < squared)                       premise
+     2. guess * guess >= squared                            algebra 1
+}"""
+
+assert(guess* guess >= squared )
+assert( (guess-1) * (guess -1) < squared)

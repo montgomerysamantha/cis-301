@@ -1,0 +1,19 @@
+(p → q) → r ⊢ p → (q → r)
+{
+    1. (p → q) → r      premise
+    2. {
+        3. p            assume //assume p to prove q implies r
+        4. {
+            5. q        assume //assume q to prove r
+            6. {
+                7. p    assume
+                8. q    premise
+            }
+            9. p → q    →i 6
+            10. r       →e 1 9
+
+        }
+        11. q → r   →i 4
+    }
+    12. p → q → r   →i 2
+}

@@ -1,0 +1,52 @@
+import org.sireum.logika._
+
+val galleonsWon: Z = 1000
+
+val sicklesPerG: Z = 17
+
+val knutsPerS: Z = 29
+
+var money: Z = 0
+
+money = money + galleonsWon
+
+l"""{
+    // Fix Me
+    1. money == money_old + galleonsWon      premise
+    2. galleonsWon == 1000                   premise
+    3. sicklesPerG == 17                     premise
+    4. knutsPerS == 29                       premise
+    5. money == money_old + 1000             subst1 2 1
+    6. money_old == 0                        premise
+    7. money == 0 + 1000                     subst1 6 5
+    8. money == 1000                         algebra 7
+}"""
+
+money = money * sicklesPerG
+
+l"""{
+    // Fix Me
+    1. money_old == 1000                     premise
+    2. money == money_old * sicklesPerG      premise
+    3. sicklesPerG == 17                     premise
+    4. money == 1000 * sicklesPerG           subst1 1 2
+    5. money == 1000 * 17                    subst1 3 4
+    6. money == 17000                        algebra 5
+}"""
+
+money = money * knutsPerS
+l"""{
+    // Fix Me
+    1. money_old == 17000                    premise
+    2. knutsPerS == 29                       premise
+    3. money == money_old * knutsPerS        premise
+    4. money == 17000 * knutsPerS            subst1 1 3
+    5. money == 17000 * 29                   subst1 2 4
+    6. money == 493000                       algebra 5
+    7. galleonsWon == 1000                   premise
+    8. 493000 == 1000 * 493                  algebra
+    9. money == 1000 * 493                   subst2 6 8
+    10. money == galleonsWon * 493           subst2 7 9
+}"""
+
+assert (money == galleonsWon * 493)

@@ -1,0 +1,19 @@
+¬(p → q) ⊢ p ∧ ¬q
+{
+    1. ¬(p → q)             premise
+    2. {
+        3. ¬(p ∧ ¬q)        assume
+        4. {
+            5. p            assume
+            6. {
+                7. ¬q       assume
+                8. p ^ ¬q   ^i 5 7
+                9. _|_      ¬e 8 3
+            }
+            10. q           pbc 6
+        }
+        11. p → q           →i 4
+        12. _|_             ¬e 11 1
+    }
+    13. p ∧ ¬q              pbc 2
+}

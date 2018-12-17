@@ -1,0 +1,14 @@
+∀ x ∀ y p(x, y) ⊢ ∀ y ∀ x p(x, y)
+{
+    1. ∀ x ∀ y p(x, y)          premise
+    2. {
+        3. b
+        4. {
+            5. a
+            6. ∀ y p(a, y)      ∀e 1 a
+            7. p(a, b)          ∀e 6 b
+        }
+        8. ∀ x p(x, b)          ∀i 4
+    }
+    9. ∀ y ∀ x p(x, y)          ∀i 2
+}

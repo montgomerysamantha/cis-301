@@ -1,0 +1,47 @@
+p → q ∨ r, q → s, r → t ⊢ p → (t ∨ s)
+{
+    1. p → q ∨ r        premise
+    2. q → s            premise
+    3. r → t            premise
+    41.
+    {
+        42. p           assume //assuming p to prove t or s
+        43. q V r       →e 1 42
+        4.
+        {
+            5. q            assume
+            6. s            →e 2 5
+            61. t V s       Vi2 6
+        }
+        7.
+        {
+            8. r            assume
+            9. t            →e 3 8
+            10. t V s       Vi1 9
+        }
+        11. t V s           Ve 43 4 7
+    }
+    12. p → (t V s)     →i 41
+}
+/*
+{
+    1. p → q ∨ r        premise
+    2. q → s            premise
+    3. r → t            premise
+    4. {
+        5. p            assume
+        6. {
+            7. q        assume
+            8. s        →e 2 7
+        }
+        9. p → s        →i 6
+        10. {
+            11. r       assume
+            12. t       →e 3 11
+            13. t V s   Vi1 12
+        }
+        14. t V s           Ve 5 6 10
+    }
+
+}
+*/

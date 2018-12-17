@@ -1,0 +1,46 @@
+¬(p ∨ q ∨ r) ⊢ ¬p ∧ ¬q ∧ ¬r
+/*
+{
+    1. ¬(p ∨ q ∨ r)     premise
+    2. {
+    //do for each individual case
+        3. (p ^ q ^ r)    assume
+        4. p ^ q        ^e1 3
+        5. p            ^e1 4
+        6. q            ^e2 4
+        7. r            ^e2 3
+        8. p V q        Vi1 5
+        9. p V q V r    Vi1 8
+        10. _|_         ~e 9 1
+    }
+    11. ~(p ^ q ^ r)    ~i 2
+}
+*/
+{
+    1. ¬(p ∨ q ∨ r)     premise
+    2. {
+        3. p            assume //assume p and or it together w/ everything
+        4. p V q        Vi1 3
+        5. p V q V r    Vi1 4
+        6. _|_          ~e 5 1 /*we have reached a contradictory state
+        b/c we have p V q V r and ~(p V q V r). since we assumed p and
+        reached this, we can conclude ~p*/
+    }
+    7. ~p               ~i 2
+    8. {
+        9. q            assume //assume q and or it together
+        10. p V q       Vi2 9
+        11. p V q V r   Vi1 10
+        12. _|_         ~e 11 1 /*conclude bottom b/c we have line 11 and line 1 contradicting,
+        since we assumed q and got here, we can conclude ~q */
+    }
+    13. ~q              ~i 8
+    14. {
+        15. r           assume //assume r and or it together w/ everybody
+        16. p V q V r   Vi2 15
+        17. _|_         ~e 16 1
+    }
+    18. ~r              ~i 14
+    19. ~p ^ ~q         ^i 7 13
+    20. ~p ^ ~q ^ ~r    ^i 19 18
+}

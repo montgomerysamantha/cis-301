@@ -1,0 +1,28 @@
+⊢ (p → q) ∨ (q → r)
+{
+    1. {
+        2. ~((p → q) ∨ (q → r))    assume
+        3. {
+            4. p                   assume
+            5. {
+                6. q               assume
+                7. {
+                    8. p           assume
+                    9. q           premise
+                }
+                10. p → q             →i 7
+                11. (p → q) V (q → r) Vi1 10
+                12. _|_               ~e 11 2
+                13. r                 _|_e 12
+            }
+            14. q → r               →i 5
+            15. (p → q) V (q → r)   Vi2 14
+            16. _|_                 ~e 15 2
+            17. q                   _|_e 16
+        }
+        18. p → q                   →i 3
+        19. (p → q) ∨ (q → r)        Vi1 18
+        20. _|_                     ~e 19 2
+    }
+    21. (p → q) ∨ (q → r)           pbc 1
+}

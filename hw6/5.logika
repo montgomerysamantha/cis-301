@@ -1,0 +1,98 @@
+/*
+5.  (8 points )
+a. *The Weaslesy twins have finally paid Harry back for his investment
+ in Weasley’s Wizard Wheezes. Tragically, they have paid him back in
+ the Knuts they did not give out as change.  We have provided Harry a
+  program to convert the Knuts into Galleons so he can figure out if
+  he made money through his investment.*
+
+b. Add the logical steps to program 5.logika to show that the assertions
+ at the end of the program hold.
+
+c. The first assertion and the Loop invariant show that the total value
+ has not changed (we did not create or destroy money, we just converted).
+
+d. The last two assertions ensure that no more Sickles can be converted
+into Galleons and no more Knuts can be converted into Sickles.
+*/
+
+import org.sireum.logika._
+
+val SicklesPerG: Z = 17
+val KnutsPerS: Z = 29
+
+val initKnuts : Z = readInt("Type an int > 0: ")
+var remKnuts:Z = initKnuts
+var remSickles : Z = 0
+var remGalleons : Z = 0
+
+l"""{
+    // Fix Me
+    1. remKnuts = initKnuts                 premise
+    2. remSickles = 0                       premise
+    3. remGalleons = 0                      premise
+    4. SicklesPerG = 17                     premise
+    5. KnutsPerS = 29                       premise
+    6. initKnuts = remKnuts                 algebra 1
+    7. initKnuts = remKnuts + remSickles * KnutsPerS + remGalleons * SicklesPerG * KnutsPerS   algebra 6 2 3 4 5
+}"""
+
+while (remKnuts >= KnutsPerS){
+    l"""{
+        invariant initKnuts = remKnuts + remSickles * KnutsPerS + remGalleons * SicklesPerG * KnutsPerS
+        modifies remSickles , remKnuts
+    }"""
+    remKnuts = remKnuts - KnutsPerS
+  l"""{
+      // Fix Me
+      1. remKnuts_old >= KnutsPerS                  premise
+      2. remKnuts = remKnuts_old - KnutsPerS        premise
+      3. remKnuts + KnutsPerS = remKnuts_old        algebra 2
+      4. KnutsPerS = 29                             premise
+      5. initKnuts = remKnuts_old + remSickles * KnutsPerS + remGalleons * SicklesPerG * KnutsPerS  premise
+      6. initKnuts = (remKnuts + KnutsPerS) + remSickles * KnutsPerS + remGalleons * SicklesPerG * KnutsPerS subst2 3 5
+  }"""
+    remSickles = remSickles + 1
+l"""{
+    // Fix Me
+      1. remSickles = remSickles_old + 1            premise
+      2. initKnuts = (remKnuts + KnutsPerS) + remSickles_old * KnutsPerS + remGalleons * SicklesPerG * KnutsPerS    premise
+      3. remSickles_old = remSickles - 1            algebra 1
+      4. initKnuts = (remKnuts + KnutsPerS) + (remSickles - 1) * KnutsPerS + remGalleons * SicklesPerG * KnutsPerS  subst1 3 2
+      5. initKnuts = remKnuts + remSickles * KnutsPerS + remGalleons * SicklesPerG * KnutsPerS  algebra 4
+}"""
+}
+
+while(remSickles >= SicklesPerG){
+    l"""{
+        invariant initKnuts = remKnuts + remSickles * KnutsPerS + remGalleons * SicklesPerG * KnutsPerS
+        modifies remGalleons, remSickles
+    }"""
+    remSickles = remSickles - SicklesPerG
+l"""{
+    // Fix Me
+    1. remSickles = remSickles_old - SicklesPerG                                                        premise
+    2. initKnuts = remKnuts + remSickles_old * KnutsPerS + remGalleons * SicklesPerG * KnutsPerS        premise
+    3. remSickles_old = remSickles + SicklesPerG                                                        algebra 1
+    4. initKnuts = remKnuts + (remSickles + SicklesPerG) * KnutsPerS + remGalleons * SicklesPerG * KnutsPerS    subst1 3 2
+}"""
+    remGalleons = remGalleons + 1
+ l"""{
+     // Fix Me
+     1. remGalleons = remGalleons_old + 1                                                                           premise
+     2. initKnuts = remKnuts + (remSickles + SicklesPerG) * KnutsPerS + remGalleons_old * SicklesPerG * KnutsPerS   premise
+     3. remGalleons_old = remGalleons - 1                                                                           algebra 1
+     4. initKnuts = remKnuts + (remSickles + SicklesPerG) * KnutsPerS + (remGalleons - 1) * SicklesPerG * KnutsPerS subst1 3 2
+     5. initKnuts = remKnuts + remSickles * KnutsPerS + remGalleons * SicklesPerG * KnutsPerS  algebra 4
+ }"""
+}
+l"""{
+    // Fix Me
+    1. not (remSickles >= SicklesPerG)      premise
+    2. remSickles < SicklesPerG             algebra 1
+    3. not (remKnuts >= KnutsPerS)          premise
+    4. remKnuts < KnutsPerS                 algebra 3
+}"""
+assert (initKnuts == remKnuts + remSickles * KnutsPerS + remGalleons * SicklesPerG * KnutsPerS)
+assert(remKnuts < KnutsPerS)
+assert(remSickles < SicklesPerG)

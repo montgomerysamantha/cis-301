@@ -1,0 +1,26 @@
+(p ∧ q ∧ r) ∨ s ⊢ (p ∨ s) ∧ (q ∨ s) ∧ (r ∨ s)
+{
+    1. (p ∧ q ∧ r) ∨ s      premise
+    2.
+    {
+        3. p ^ q ^ r        assume
+        4. p ^ q            ^e1 3
+        5. p                ^e1 4
+        6. (p V s)          Vi1 5
+        7. q                ^e2 4
+        8. (q V s)          Vi1 7
+        9. r                ^e2 3
+        10. (r V s)         Vi1 9
+        11. (p V s) ^ (q V s)           ^i 6 8
+        12. (p V s) ^ (q V s) ^ (r V s) ^i 11 10
+    }
+    13. {
+        14. s                 assume
+        15. (p V s)           Vi2 14
+        16. (q V s)           Vi2 14
+        17. (r V s)           Vi2 14
+        18. (p V s) ^ (q V s)           ^i 15 16
+        19. (p V s) ^ (q V s) ^ (r V s) ^i 18 17
+    }
+    20. (p ∨ s) ∧ (q ∨ s) ∧ (r ∨ s)     Ve 1 2 13
+}
